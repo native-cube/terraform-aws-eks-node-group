@@ -80,7 +80,6 @@ data "aws_launch_template" "cluster" {
 
 resource "aws_launch_template" "cluster" {
   image_id               = data.aws_ssm_parameter.cluster.value
-  instance_type          = "t3.medium"
   name                   = "eks-node-group-launch-template"
   update_default_version = true
 
@@ -100,6 +99,10 @@ resource "aws_launch_template" "cluster" {
     tags = {
       Name                                                  = "eks-node-group-instance-name"
       "kubernetes.io/cluster/eks-node-group-module-cluster" = "owned"
+      Environment                                           = "test"
+      Team                                                  = ""
+      Service                                               = "eks"
+      Repository                                            = ""
     }
   }
 
@@ -116,11 +119,13 @@ module "eks-node-group" {
 
   cluster_name = aws_eks_cluster.cluster.id
 
+  instance_types = ["m5.large", "m5d.large", "m5a.large", "m5n.large"]
+
   subnet_ids = data.aws_subnets.all.ids
 
   desired_size = 1
   min_size     = 1
-  max_size     = 1
+  max_size     = 3
 
   launch_template = {
     name    = data.aws_launch_template.cluster.name
@@ -136,6 +141,9 @@ module "eks-node-group" {
   tags = {
     "kubernetes.io/cluster/eks-node-group-module-cluster" = "owned"
     Environment                                           = "test"
+    Team                                                  = ""
+    Service                                               = "eks"
+    Repository                                            = ""
   }
 
   depends_on = [data.aws_launch_template.cluster]
