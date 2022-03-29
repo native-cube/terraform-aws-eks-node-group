@@ -86,10 +86,10 @@ resource "aws_launch_template" "cluster" {
   key_name = "eks-test"
 
   block_device_mappings {
-    device_name = "/dev/sda1"
+    device_name = "/dev/xvda"
 
     ebs {
-      volume_size = 20
+      volume_size = 80
     }
   }
 
