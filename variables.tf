@@ -142,3 +142,15 @@ variable "taints" {
   description = "List of objects containing Kubernetes taints which will be applied to the nodes in the node group. Maximum of 50 taints per node group."
   default     = []
 }
+
+variable "create_before_destroy" {
+  type        = bool
+  description = "Create new node group before destroying an old one. To be used with node_group_name_prefix argument."
+  default     = false
+}
+
+variable "timeouts" {
+  description = "Create, update, and delete timeout configurations for the node group"
+  type        = map(string)
+  default     = {}
+}

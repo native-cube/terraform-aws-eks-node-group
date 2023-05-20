@@ -8,7 +8,7 @@ Terraform module to provision EKS Managed Node Group
 ```hcl
 module "eks-node-group" {
   source = "native-cube/eks-node-group/aws"
-  version = "~> 1.0.0"
+  version = "~> 1.1.0"
 
   cluster_name = aws_eks_cluster.cluster.id
 
@@ -61,13 +61,13 @@ module "eks-node-group" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.0.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.64.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.0.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.64.0 |
 
 ## Modules
 
@@ -78,6 +78,7 @@ No modules.
 | Name | Type |
 |------|------|
 | [aws_eks_node_group.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_node_group) | resource |
+| [aws_eks_node_group.main_create_before_destroy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_node_group) | resource |
 | [aws_iam_role.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 
 ## Inputs
@@ -88,6 +89,7 @@ No modules.
 | <a name="input_ami_type"></a> [ami\_type](#input\_ami\_type) | Type of Amazon Machine Image (AMI) associated with the EKS Node Group. Valid values: AL2\_x86\_64 \| AL2\_x86\_64\_GPU \| AL2\_ARM\_64 \| CUSTOM \| BOTTLEROCKET\_ARM\_64 \| BOTTLEROCKET\_x86\_64. Terraform will only perform drift detection if a configuration value is provided. | `string` | `null` | no |
 | <a name="input_capacity_type"></a> [capacity\_type](#input\_capacity\_type) | Type of capacity associated with the EKS Node Group. Defaults to ON\_DEMAND. Valid values: ON\_DEMAND, SPOT. | `string` | `"ON_DEMAND"` | no |
 | <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | The name of the EKS cluster. | `string` | n/a | yes |
+| <a name="input_create_before_destroy"></a> [create\_before\_destroy](#input\_create\_before\_destroy) | Create new node group before destroying an old one. To be used with node\_group\_name\_prefix argument. | `bool` | `false` | no |
 | <a name="input_create_iam_role"></a> [create\_iam\_role](#input\_create\_iam\_role) | Create IAM role for node group. Set to false if pass `node_role_arn` as an argument | `bool` | `true` | no |
 | <a name="input_desired_size"></a> [desired\_size](#input\_desired\_size) | Desired number of worker nodes. | `number` | n/a | yes |
 | <a name="input_disk_size"></a> [disk\_size](#input\_disk\_size) | Disk size in GiB for worker nodes. Defaults to 20. Terraform will only perform drift detection if a configuration value is provided. | `number` | `null` | no |
@@ -108,6 +110,7 @@ No modules.
 | <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | A list of subnet IDs to launch resources in. | `list(string)` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of tags (key-value pairs) passed to resources. | `map(string)` | `{}` | no |
 | <a name="input_taints"></a> [taints](#input\_taints) | List of objects containing Kubernetes taints which will be applied to the nodes in the node group. Maximum of 50 taints per node group. | `list(object({ key = string, value = any, effect = string }))` | `[]` | no |
+| <a name="input_timeouts"></a> [timeouts](#input\_timeouts) | Create, update, and delete timeout configurations for the node group | `map(string)` | `{}` | no |
 | <a name="input_update_config"></a> [update\_config](#input\_update\_config) | Update config configuration block which is a key-value map. Accepted argmuents are `max_unavailable` and `max_unavailable_percentage`. | `map(any)` | `{}` | no |
 
 ## Outputs
